@@ -1,0 +1,41 @@
+name: Deploy to Netlify with Large Media
+on: [pull_request, push]
+
+env:
+  NODE_OPTIONS: --max_old_space_size=4096
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "lts/*"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Netlify Large Media
+        run: |
+          export SHELL=/usr/bin/bash 
+          npx netlify lm:install
+          source $HOME/.config/netlify/helper/path.bash.inc
+          git lfs fetch
+          git lfs checkout
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish to Netlify
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

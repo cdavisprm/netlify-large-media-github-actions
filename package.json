@@ -12,7 +12,8 @@
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "action": "act --secret-file .env push"
   },
   "dependencies": {
     "gatsby": "^4.4.0",
