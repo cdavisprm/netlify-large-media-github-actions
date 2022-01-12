@@ -18,16 +18,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Netlify Large Media
-        run: |
-          export SHELL=/usr/bin/bash 
-          npx netlify lm:install
-          source $HOME/.config/netlify/helper/path.bash.inc
-          git lfs fetch
-          git lfs checkout
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      #- name: Install Netlify Large Media
+      #  run: |
+      #    export SHELL=/usr/bin/bash 
+      #    netlify lm:install
+      #    $SHELL $HOME/.config/netlify/helper/path.*.inc
+      #    git lfs fetch
+      #    git lfs checkout
+      #  env:
+      #    NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #    NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
       - name: Build
         run: npm run build

@@ -13,9 +13,12 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "action": "act --secret-file .env push"
+    "action": "act --secret-file .env push",
+    "postinstall": "if [ -z $SHELL ]; then export SHELL=/usr/bin/bash; fi && netlify lm:install && $SHELL ~/.config/netlify/helper/*.inc && git lfs fetch && git lfs checkout"
   },
   "dependencies": {
+    "dotenv": "^11.0.0",
+    "dotenv-cli": "^4.1.1",
     "gatsby": "^4.4.0",
     "netlify-cli": "^8.6.18",
     "react": "^17.0.1",
